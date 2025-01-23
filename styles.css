@@ -1,0 +1,45 @@
+* {
+    box-sizing: border-box;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+body {
+    background-color: black;
+    height: 100vh;
+    display: flex;
+}
+
+.container {
+    background-color: rgb(19, 54, 73);
+    box-shadow: -5px -5px 10px navy, 5px 5px 10px navy;
+    width: 90%;
+    height: 90%;
+    margin: auto auto;
+    padding: 2rem;
+    color: rgb(203, 200, 177);
+}
+
+.board {
+    background-color: rgb(3, 167, 186);
+    height: 400px; 
+    width: 400px;
+    margin: 2rem auto;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
+}
+
+.squares {
+    font-size: calc(400px/3 - 2px);
+    height: calc(400px/3 - 2px);
+    width: calc(400px/3 - 2px);
+    background-color: black;
+    align-content: center;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+}
