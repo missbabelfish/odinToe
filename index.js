@@ -37,7 +37,7 @@ function GameController(
     // check which player is active
 	const getActivePlayer = () => activePlayer;
 
-    // active player marks square
+    // active player marks square, updates value state, check for win/tie
     const takeTurn = (player, square) => {
         count++
         gameBoard.addSquareValue(player.value, square)
@@ -54,8 +54,6 @@ function GameController(
                 // printBoard()
             }
         }, 0)
-
-        // checkWin(player)
     }
     // check for win condition or tie
     const checkWin = (activePlayer) => {
@@ -109,6 +107,10 @@ const UIController = (function () {
 	function initializeBoard() {
 		boardSquares.forEach(square => {
             square.addEventListener('click', function () {
+                if (game.board[this.id] === 1 || game.board[this.id] === -1) {
+					alert('square already marked');
+					return;
+				}
                 const active = game.getActivePlayer();
                 updatePlayer(active)
                 // updateBoard(this.id, active)
@@ -118,8 +120,8 @@ const UIController = (function () {
 	}
 
     function updateBoard(id, active) {
-        if (active === game.players[0]) {
-            document.getElementById(id).textContent = 'x'
+        if (game.board[id] === 1) {
+            document.getElementById(id).textContent = 'x';
         } else {
             document.getElementById(id).textContent = 'o'
         }
