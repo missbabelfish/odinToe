@@ -42,9 +42,20 @@ function GameController(
         count++
         gameBoard.addSquareValue(player.value, square)
 
-        // printBoard()
-        switchPlayerTurn()
-        checkWin(player)
+        UIController.updateBoard(square, player)
+
+        setTimeout(() => {
+            if (checkWin(player)) {
+                UIController.clearBoard();
+				resetBoard();
+				alert(`${activePlayer.name} wins!!`);
+            } else {
+                switchPlayerTurn()
+                // printBoard()
+            }
+        }, 0)
+
+        // checkWin(player)
     }
     // check for win condition or tie
     const checkWin = (activePlayer) => {
@@ -58,15 +69,14 @@ function GameController(
         for (let condition of winConditions) {
             let sum = condition.reduce((sum, index) => sum + board[index], 0)
             if (Math.abs(sum) === 3) {
-                UIController.clearBoard()
-                resetBoard()
-                alert(`${activePlayer.name} wins!!`)
                 win = true
             }
         }
+
         if (count === 9 && win === false) {
             alert (`It's a tie!!`)
         }
+        return win
     }
 
     // const printBoard = () => {
@@ -85,6 +95,7 @@ function GameController(
     const resetBoard = () => {
         board = board.fill('-', 0)
         activePlayer = players[0]
+        count = 0
     }
     
     return { switchPlayerTurn, getActivePlayer, takeTurn, players, board }
@@ -99,8 +110,8 @@ const UIController = (function () {
 		boardSquares.forEach(square => {
             square.addEventListener('click', function () {
                 const active = game.getActivePlayer();
-                updateBoard(this.id, active)
                 updatePlayer(active)
+                // updateBoard(this.id, active)
 				game.takeTurn(active, this.id);
 			});
 		});
@@ -126,6 +137,7 @@ const UIController = (function () {
 	return {
 		initializeBoard: initializeBoard,
         clearBoard: clearBoard,
+        updateBoard: updateBoard,
 	};
 })();
 
